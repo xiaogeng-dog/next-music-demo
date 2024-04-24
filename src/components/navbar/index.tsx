@@ -1,22 +1,25 @@
-import React, { memo } from 'react'
-import type { FC, ReactNode } from 'react'
-import styles from './index.module.scss'
-import classNames from 'classnames'
+"use client";
+import React, { memo } from "react";
+import type { FC, ReactNode } from "react";
+import styles from "./index.module.scss";
+import classNames from "classnames";
 import Link from "next/link";
 import Search from "../search";
-import { useSelector, shallowEqual } from 'react-redux';
-import type { IAppRootState } from '@/stores';
+import { useSelector, shallowEqual } from "react-redux";
+import type { IAppRootState } from "@/stores";
 
 interface IProps {
-  children?: ReactNode
+  children?: ReactNode;
 }
-const NavBar: FC<IProps> = memo(props => {
+const NavBar: FC<IProps> = memo((props) => {
+  const { navbar, counter } = useSelector(
+    (rootState: IAppRootState) => ({
+      navbar: rootState.home.navbar,
+      counter: rootState.home.counter,
+    }),
+    shallowEqual
+  );
 
-  const { navbar, counter } = useSelector((rootState: IAppRootState) => ({
-    navbar: rootState.home.navbar,
-    counter: rootState.home.counter
-  }), shallowEqual)
-  
   return (
     <div className={styles.navbar}>
       <div className={classNames("wrapper", styles.content)}>
@@ -39,9 +42,9 @@ const NavBar: FC<IProps> = memo(props => {
         </div>
       </div>
     </div>
-  )
-})
+  );
+});
 
-NavBar.displayName = 'NavBar'
+NavBar.displayName = "NavBar";
 
-export default NavBar
+export default NavBar;

@@ -1,71 +1,77 @@
-import React, { memo, useState } from 'react'
-import type { FC, ReactNode } from 'react'
-import classNames from 'classnames'
-import styles from './index.module.scss'
-import { useRouter } from 'next/router'
-import type { SearchSuggest, ConfigKey } from '@/types/home'
+"use client";
+import React, { memo, useState } from "react";
+import type { FC, ReactNode } from "react";
+import classNames from "classnames";
+import styles from "./index.module.scss";
+import { useRouter } from "next/navigation";
+import type { SearchSuggest, ConfigKey } from "@/types/home";
 
 interface IProps {
-  children?: ReactNode
-  searchData: SearchSuggest | null
+  children?: ReactNode;
+  searchData: SearchSuggest | null;
 }
-const Search: FC<IProps> = memo(props => {
-  const { children, searchData } = props
+const Search: FC<IProps> = memo((props) => {
+  const { children, searchData } = props;
 
   // const router = useRouter();
 
-  const [inputFocus, setInputFocus] = useState<boolean>(false)
-  const [placeholder, setPlaceholder] = useState('蓝牙耳机')
+  const [inputFocus, setInputFocus] = useState<boolean>(false);
+  const [placeholder, setPlaceholder] = useState("蓝牙耳机");
 
   // 事件处理：输入框回车
   function onInputKeyDown(event: KeyboardEvent) {
-    if (event.key === 'Enter') {
-      const inputTarget = event.target as HTMLInputElement // input 元素对象
-      console.log(inputTarget.value)
+    if (event.key === "Enter") {
+      const inputTarget = event.target as HTMLInputElement; // input 元素对象
+      console.log(inputTarget.value);
       // goToSearchPage(inputTarget.value);
-      setInputFocus(false)
+      setInputFocus(false);
     }
   }
 
   // 事件处理：输入聚焦/失焦
   function onInputFocus(isFocus: boolean) {
     // console.log("isFocus=>", isFocus);
-    setInputFocus(isFocus)
+    setInputFocus(isFocus);
   }
 
   function onItemClick(name?: string) {
-    if (!name) return
-    console.log(name)
-    setPlaceholder(name)
-    goToSearchPage(name)
+    if (!name) return;
+    console.log(name);
+    setPlaceholder(name);
+    goToSearchPage(name);
   }
 
-  const router = useRouter()
+  const router = useRouter();
   function goToSearchPage(name: string) {
     router.push({
-      pathname: '/search',
+      pathname: "/search",
       query: {
-        q: name
-      }
-    })
+        q: name,
+      },
+    });
   }
 
   return (
     <div className={styles.search}>
       {/* 搜索输入框 */}
-      <div className={styles['search-bg']}>
+      <div className={styles["search-bg"]}>
         <input
           className={styles.input}
           type="text"
           placeholder={placeholder}
           onFocus={() => onInputFocus(true)}
           onBlur={() => onInputFocus(false)}
-          onKeyDown={e => onInputKeyDown(e as any)}
+          onKeyDown={(e) => onInputKeyDown(e as any)}
         />
       </div>
 
       {/* 下拉的面板 */}
-      <div className={classNames(styles['search-panel'], inputFocus ? styles.show : styles.hide)}>
+      <div
+        className={classNames(
+          styles["search-panel"],
+          inputFocus ? styles.show : styles.hide
+        )}
+      >
         <div className={styles.shadow}></div>
         <h2>热门搜索</h2>
         <ul>
@@ -73,7 +79,9 @@ const Search: FC<IProps> = memo(props => {
             searchData?.configKey.map((item, index) => (
               <li
                 key={item[String(index + 1) as keyof ConfigKey]}
-                onMouseDown={() => onItemClick(item[String(index + 1) as keyof ConfigKey])}
+                onMouseDown={() =>
+                  onItemClick(item[String(index + 1) as keyof ConfigKey])
+                }
               >
                 {item[String(index + 1) as keyof ConfigKey]}
               </li>
@@ -81,9 +89,9 @@ const Search: FC<IProps> = memo(props => {
         </ul>
       </div>
     </div>
-  )
-})
+  );
+});
 
-Search.displayName = 'Search'
+Search.displayName = "Search";
 
-export default Search
+export default Search;

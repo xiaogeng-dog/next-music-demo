@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import type { FC, ReactNode } from "react";
-// import NavBar from '../navbar'
+import NavBar from "../navbar";
 import Footer from "../footer";
 
 interface IProps {
@@ -10,7 +10,7 @@ const Layout: FC<IProps> = memo((props) => {
   const { children } = props;
   return (
     <div>
-      {/* <NavBar></NavBar> */}
+      <NavBar></NavBar>
       {children}
       <Footer></Footer>
     </div>
