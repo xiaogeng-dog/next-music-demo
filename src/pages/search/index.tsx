@@ -42,7 +42,7 @@ export const getServerSideProps: GetServerSideProps =
         offset: 0,
         key: q as string,
       });
-      console.log(22222, res);
+      console.log(22222, res, q);
       return {
         props: {
           products: res?.products || [],

@@ -3,7 +3,7 @@ import React, { memo, useState } from "react";
 import type { FC, ReactNode } from "react";
 import classNames from "classnames";
 import styles from "./index.module.scss";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import type { SearchSuggest, ConfigKey } from "@/types/home";
 
 interface IProps {
